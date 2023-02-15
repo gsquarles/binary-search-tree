@@ -1,21 +1,6 @@
+import Node from "./node";
+import { prettyPrint } from "./node";
 
-
-prettyPrint = (node, prefix = '', isLeft = true) => {
-    if (node.right !== null) {
-      prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
-    }
-    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-    if (node.left !== null) {
-      prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-    }
-  }
-  class Node{
-    constructor(data = null, left = null, right = null){
-        this.data = data;
-        this.left = left;
-        this.right = right;
-    }
-}
 
 class Tree{
     constructor(inputArray){
@@ -168,7 +153,34 @@ class Tree{
 
         return Math.max(left,right) + 1;
     }
+
+    depth(nodeVal, root = this.root, edgeCount = 0){
+        if(root == null) return;
+        if(root.data === nodeVal) return edgeCount;
+
+        if(nodeVal > root.data){
+            return this.depth(nodeVal, root.right, (edgeCount + 1));
+        }else{
+            return this.depth(nodeVal,root.left, (edgeCount + 1));
+        }
+    }
         
+    isBalanced(root = this.root){
+        if(root == null) return false;
+
+        let left = root.left;
+        let right = root.right;
+        if(Math.abs(this.height(left) - this.height(right)) > 1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    rebalance(){
+        const currentTreeArray = this.inorder();
+        this.root = this.buildTree(currentTreeArray);
+    }
 }
 
 function minValue(root){
@@ -184,7 +196,7 @@ const arr = [1,2,3,4,5,6,7];
 let tree1 = new Tree(arr);
 console.log(tree1.inputArray);
 tree1.insert(8);
-tree1.delete(8);
 console.log(tree1.root);
+console.log(tree1.height());
 
 
