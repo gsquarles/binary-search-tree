@@ -32,7 +32,7 @@ class Tree{
         }else{
             root.right = this.insert(value, root.right);
         }
-        prettyPrint(this.root);
+        //prettyPrint(this.root);
         return root;
     }
 
@@ -116,6 +116,7 @@ class Tree{
     }
 
     preOrder(root = this.root){
+        
         if(root == null) return;
 
         if(root.data !== undefined){
@@ -131,6 +132,7 @@ class Tree{
     }
 
     postOrder(root = this.root){
+        
         if(root == null) return;
 
         if(root.left !== null){
@@ -179,7 +181,7 @@ class Tree{
 
     rebalance(){
         const currentTreeArray = this.inorder();
-        this.root = this.buildTree(currentTreeArray);
+        this.root = this.buildTree(currentTreeArray, 0, currentTreeArray.length -1);
     }
 }
 
@@ -192,11 +194,41 @@ function minValue(root){
     return min;
 }
 
-const arr = [1,2,3,4,5,6,7];
-let tree1 = new Tree(arr);
-console.log(tree1.inputArray);
-tree1.insert(8);
-console.log(tree1.root);
-console.log(tree1.height());
+function createRandomArray(n){
+    let array = [];
+
+    for(let i = 0; i < n; i++){
+        array[i] = Math.floor(Math.random() * 101);
+    }
+    return array;
+}
+
+function addNumbers(n){
+    
+    for(let i=0; i<n; i++){
+        tree1.insert(Math.floor(Math.random() * 101) +100);
+    }
+}
+
+let tree1 = new Tree(createRandomArray(7));
+prettyPrint(tree1.root)
+console.log(tree1.isBalanced());
+console.log(tree1.levelOrder());
+console.log(tree1.preOrder());
+console.log(tree1.postOrder());
+console.log(tree1.inorder());
+addNumbers(7);
+console.log(tree1.isBalanced());
+tree1.rebalance();
+prettyPrint(tree1.root);
+console.log(tree1.isBalanced());
+console.log(tree1.levelOrder());
+console.log(tree1.preOrder());
+console.log(tree1.postOrder());
+console.log(tree1.inorder());
+
+
+
+
 
 
